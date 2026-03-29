@@ -65,11 +65,11 @@ const Home = () => (
 
       <div className="container mx-auto px-6 md:px-12 text-center relative z-20 flex flex-col items-center justify-center h-full pt-20">
         <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif text-white mb-6 drop-shadow-2xl tracking-tighter leading-none animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-          Distinctively<br />
-          <span className="italic font-light text-accent text-glow">Jnanavahini</span>
+          Cultivating<br />
+          <span className="italic font-light text-accent text-glow">Values</span>
         </h1>
         <p className="text-xl md:text-3xl text-white/90 max-w-2xl mx-auto mb-12 font-serif font-light leading-relaxed animate-in fade-in duration-1000 delay-500">
-          The home of character education in the heart of Karnataka.
+          Empowering the Malnad Frontier — providing world-class, affordable education to 47 Gram Panchayats.
         </p>
         <div className="animate-in fade-in duration-1000 delay-700">
           <Link to="/admissions/admissions" className="group flex items-center gap-4 bg-white text-primary px-8 py-4 rounded-full font-sans font-bold text-sm tracking-widest uppercase hover:bg-accent transition-all duration-300">
@@ -86,6 +86,25 @@ const Home = () => (
       </div>
     </section>
 
+    {/* Key Statistics Bar */}
+    <section className="py-16 bg-primary/5 relative z-20">
+      <div className="container mx-auto px-6 max-w-7xl">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { value: '11', label: 'Years of 100% SSLC Pass Rate' },
+            { value: '680+', label: 'Students Enrolled' },
+            { value: '15%', label: 'Tribal Community Representation' },
+            { value: '40+', label: 'Specially-Abled Graduates' },
+          ].map((stat, i) => (
+            <div key={i} className="group">
+              <div className="text-5xl md:text-6xl font-serif text-primary mb-2 group-hover:text-accent transition-colors">{stat.value}</div>
+              <div className="text-xs md:text-sm font-sans font-bold uppercase tracking-widest text-gray-500">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
     {/* Elegant Two-Column Intro */}
     <section className="py-32 bg-white relative z-20 px-6">
       <div className="container mx-auto max-w-7xl">
@@ -94,18 +113,18 @@ const Home = () => (
             <h5 className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-6 flex items-center gap-4">
               <div className="w-8 h-[1px] bg-primary"></div> Since 1998
             </h5>
-            <h3 className="text-4xl md:text-5xl font-serif text-primary mb-8 leading-tight">
+            <h3 className="text-5xl md:text-6xl font-serif text-primary mb-8 leading-tight">
               A broader <br /><i className="font-light">curriculum</i> for life.
             </h3>
-            <p className="text-gray-600 text-xl md:text-2xl leading-relaxed font-sans font-light mb-10">
-              At Jnanavahini, we believe that education extends far beyond the classroom walls. Our 'Pancha Mukhi' approach develops the intellect, nurtures the spirit, and builds resilience for the challenges of tomorrow.
+            <p className="text-gray-600 text-2xl md:text-3xl leading-relaxed font-sans font-light mb-10">
+              From a single room with 7 students in 1998 to a multi-institution society serving the Malnad region. Our 'Panchamukhi' (five-fold) education system develops the intellect, nurtures the spirit, and builds resilience.
             </p>
             <Link to="/about/history" className="inline-flex items-center gap-2 text-primary border-b border-primary pb-1 font-bold text-sm md:text-base tracking-widest uppercase hover:text-accent hover:border-accent transition-colors">
               Our Heritage <ChevronRight size={16} />
             </Link>
           </div>
           <div className="lg:w-7/12 relative group h-[600px] w-full">
-             <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Students on campus" className="w-full h-full object-cover rounded-tr-[100px] rounded-bl-[100px] shadow-2xl transition-transform duration-1000 group-hover:scale-[1.02]" />
+             <img src="/images/gallery/Aksharabhyasa Program.png" alt="Students on campus" className="w-full h-full object-cover rounded-tr-[100px] rounded-bl-[100px] shadow-2xl transition-transform duration-1000 group-hover:scale-[1.02]" />
              <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-secondary rounded-full -z-10 blur-2xl opacity-50"></div>
           </div>
         </div>
@@ -122,15 +141,15 @@ const Home = () => (
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { title: 'Academic Excellence', icon: <BookOpen size={32} />, link: '/academics/curriculum', desc: 'Rigorous curriculum resulting in consistent 100% pass rates.' },
-            { title: 'Arts & Culture', icon: <Calendar size={32} />, link: '/life/gallery', desc: 'Deeply rooted in Indian heritage and cultural expressions.' },
-            { title: 'Campus Life', icon: <ImageIcon size={32} />, link: '/life/gallery', desc: 'State-of-the-art facilities set in a beautiful, serene environment.' },
-            { title: 'Admissions & Compliance', icon: <UserCheck size={32} />, link: '/disclosure/affiliation', desc: 'Transparent policies, accessible forms, and public disclosures.' },
+            { title: 'Our Schools', icon: <BookOpen size={32} />, link: '/academics/curriculum', desc: 'Four institutions under one ecosystem — from primary to pre-university.' },
+            { title: 'The Jnanavahini Way', icon: <Calendar size={32} />, link: '/about/jnanavahini-way', desc: 'Krithamsmara, Samarpana Nidhi, and values that define us.' },
+            { title: 'Achievements', icon: <ImageIcon size={32} />, link: '/about/achievements', desc: '11 years of 100% pass rates and state-level champions.' },
+            { title: 'Partner With Us', icon: <UserCheck size={32} />, link: '/about/partner', desc: 'CSR, sponsorships, and institutional collaborations.' },
           ].map((item, i) => (
             <Link key={i} to={item.link} className="group bg-white p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-secondary/30 relative flex flex-col h-full transform hover:-translate-y-2">
               <div className="text-secondary mb-8 group-hover:scale-110 transition-transform duration-500">{item.icon}</div>
-              <h3 className="text-2xl md:text-3xl font-serif text-primary mb-4">{item.title}</h3>
-              <p className="text-gray-500 text-lg font-sans font-light leading-relaxed mb-8 flex-grow">{item.desc}</p>
+              <h3 className="text-3xl md:text-4xl font-serif text-primary mb-4">{item.title}</h3>
+              <p className="text-gray-500 text-xl font-sans font-light leading-relaxed mb-8 flex-grow">{item.desc}</p>
               <div className="mt-auto flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest text-primary/50 group-hover:text-primary transition-colors">
                 Discover <ChevronRight size={14} className="group-hover:translate-x-2 transition-transform" />
               </div>
@@ -187,24 +206,24 @@ const Contact = () => (
       <div className="flex flex-col lg:flex-row gap-20">
         <div className="lg:w-5/12 pt-10">
           <h5 className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4">Connect With Us</h5>
-          <h2 className="text-5xl md:text-6xl font-serif text-primary mb-10 tracking-tight">Get in <i className="font-light text-secondary">Touch</i></h2>
+          <h2 className="text-6xl md:text-7xl font-serif text-primary mb-10 tracking-tight">Get in <i className="font-light text-secondary">Touch</i></h2>
           
-          <p className="text-gray-600 font-sans font-light text-lg leading-relaxed mb-12">
+          <p className="text-gray-600 font-sans font-light text-xl md:text-2xl leading-relaxed mb-12">
             Whether you're a prospective parent arranging a visit, or seeking general information, our registry team is available to assist you.
           </p>
           
           <div className="space-y-10">
             <div className="group">
               <h4 className="font-serif text-xl text-primary mb-2 flex items-center gap-3"><MapPin size={20} className="text-secondary" /> Address</h4>
-              <p className="text-gray-500 font-sans font-light pl-8 group-hover:text-primary transition-colors">Kalidasa Road, Koppa - 577126<br/>Chickmagalur District, Karnataka</p>
+              <p className="text-gray-500 font-sans font-light pl-8 group-hover:text-primary transition-colors">Kalidasa Road, Koppa – 577 126<br/>Chikkmagaluru District, Karnataka</p>
             </div>
             <div className="group">
               <h4 className="font-serif text-xl text-primary mb-2 flex items-center gap-3"><Phone size={20} className="text-secondary" /> Telephone</h4>
-              <p className="text-gray-500 font-sans font-light pl-8 group-hover:text-primary transition-colors">+91-4102-500101</p>
+              <p className="text-gray-500 font-sans font-light pl-8 group-hover:text-primary transition-colors">+91 8762564754</p>
             </div>
             <div className="group">
               <h4 className="font-serif text-xl text-primary mb-2 flex items-center gap-3"><Mail size={20} className="text-secondary" /> Email</h4>
-              <p className="text-gray-500 font-sans font-light pl-8 group-hover:text-primary transition-colors">sevavahinitrust@gmail.com</p>
+              <p className="text-gray-500 font-sans font-light pl-8 group-hover:text-primary transition-colors">jnanavahinihighschool@gmail.com</p>
             </div>
           </div>
         </div>
@@ -243,11 +262,14 @@ const App = () => {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Our Heritage', href: '/about/history' },
-    { name: 'Academic Life', href: '/academics/curriculum' },
+    { name: 'About Us', href: '/about/history' },
+    { name: 'Our Schools', href: '/academics/curriculum' },
+    { name: 'The Jnanavahini Way', href: '/about/jnanavahini-way' },
+    { name: 'Achievements', href: '/about/achievements' },
+    { name: 'Future Vision', href: '/about/infrastructure' },
+    { name: 'Partner With Us', href: '/about/partner' },
     { name: 'Admissions', href: '/admissions/admissions' },
-    { name: 'Campus Gallery', href: '/life/gallery' },
-    { name: 'Public Disclosures', href: '/disclosure/affiliation' },
+    { name: 'Gallery', href: '/life/gallery' },
     { name: 'Contact Us', href: '/contact' },
   ]
 
@@ -324,11 +346,11 @@ const App = () => {
               <div className={`hidden lg:flex flex-col gap-8 pl-16 border-l w-max border-white/10 text-white/70 font-sans font-light transition-all duration-700 delay-500 ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}>
                 <div>
                   <h5 className="font-bold uppercase tracking-widest text-xs text-secondary mb-3">Location</h5>
-                  <p>Kalidasa Road, Koppa - 577126<br/>Chickmagalur, Karnataka</p>
+                  <p>Kalidasa Road, Koppa – 577 126<br/>Chikkmagaluru, Karnataka</p>
                 </div>
                 <div>
                   <h5 className="font-bold uppercase tracking-widest text-xs text-secondary mb-3">Enquiries</h5>
-                  <p>+91-4102-500101<br/>sevavahinitrust@gmail.com</p>
+                  <p>+91 8762564754<br/>jnanavahinihighschool@gmail.com</p>
                 </div>
                 <div>
                   <h5 className="font-bold uppercase tracking-widest text-xs text-secondary mb-3">Portal</h5>
@@ -348,7 +370,7 @@ const App = () => {
             <Route path="/academics/:slug" element={<ContentPage type="academics" />} />
             <Route path="/admissions/:slug" element={<ContentPage type="admissions" />} />
             <Route path="/blog/:slug" element={<ContentPage type="blog" />} />
-            <Route path="/disclosure/:slug" element={<ContentPage type="disclosure" />} />
+            <Route path="/disclosure/:slug" element={<ContentPage type="disclosures" />} />
             <Route path="/life/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
@@ -366,11 +388,11 @@ const App = () => {
                   </div>
                   <div>
                     <h4 className="text-2xl font-serif tracking-widest uppercase">Jnanavahini</h4>
-                    <p className="text-[10px] font-sans font-bold tracking-[0.4em] uppercase text-white/50 mt-1">Education for Life</p>
+                    <p className="text-[10px] font-sans font-bold tracking-[0.4em] uppercase text-white/50 mt-1">Seva Vahini Trust®</p>
                   </div>
                 </Link>
                 <p className="text-white/60 font-sans font-light leading-relaxed mb-8 max-w-sm">
-                  Dedicated to excellence in education, rooted in traditional values while embracing modern pedagogy for over two decades.
+                  A registered educational trust with 80G Tax Exemption status. Cultivating values and empowering the Malnad frontier since 1998.
                 </p>
               </div>
 
@@ -386,20 +408,20 @@ const App = () => {
               <div className="lg:col-span-4">
                 <h5 className="font-serif text-xl italic mb-6">Contact</h5>
                 <ul className="space-y-4 font-sans text-sm font-light text-white/70">
-                  <li className="flex items-start gap-3"><MapPin size={18} className="text-secondary shrink-0 mt-1" /> Kalidasa Road, Koppa - 577126, KA</li>
-                  <li className="flex items-center gap-3"><Phone size={18} className="text-secondary" /> +91-4102-500101</li>
-                  <li className="flex items-center gap-3"><Mail size={18} className="text-secondary" /> sevavahinitrust@gmail.com</li>
+                  <li className="flex items-start gap-3"><MapPin size={18} className="text-secondary shrink-0 mt-1" /> Kalidasa Road, Koppa – 577 126, KA</li>
+                  <li className="flex items-center gap-3"><Phone size={18} className="text-secondary" /> +91 8762564754</li>
+                  <li className="flex items-center gap-3"><Mail size={18} className="text-secondary" /> jnanavahinihighschool@gmail.com</li>
                 </ul>
               </div>
 
             </div>
 
             <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-white/40 font-sans text-xs uppercase tracking-widest">
-              <p>&copy; {new Date().getFullYear()} Jnanavahini Education Society.</p>
+              <p>&copy; {new Date().getFullYear()} Jnanavahini Education Society · Seva Vahini Trust®</p>
               <div className="flex gap-6">
-                <a href="#" className="hover:text-white transition-colors">Privacy</a>
-                <a href="#" className="hover:text-white transition-colors">Terms</a>
-                <a href="#" className="hover:text-white transition-colors">Cookies</a>
+                <Link to="/disclosure/affiliation" className="hover:text-white transition-colors">Disclosures</Link>
+                <Link to="/about/partner" className="hover:text-white transition-colors">Donate</Link>
+                <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
               </div>
             </div>
           </div>

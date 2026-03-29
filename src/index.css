@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
 @theme {
-  --color-primary: #702381;
-  --color-secondary: #C7B0D5;
-  --color-accent: #FFD700;
-  
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Playfair Display", serif;
+  --color-primary: #1a1744; /* deeper indigo */
+  --color-secondary: #c0a062; /* muted gold */
+  --color-accent: #eab308; /* bright gold/yellow */
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "DM Serif Display", serif;
 }
 
 body {
