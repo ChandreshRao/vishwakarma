@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom'
 import { Menu, X, Phone, Mail, MapPin, ExternalLink, Calendar, BookOpen, UserCheck, Image as ImageIcon, ChevronRight } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 
@@ -11,7 +11,7 @@ const useFetchContent = (type, slug) => {
   useEffect(() => {
     async function load() {
       try {
-        const response = await fetch(`/src/content/${type}/${slug}.json`);
+        const response = await fetch(`${import.meta.env.BASE_URL}content/${type}/${slug}.json`);
         const json = await response.json();
         setData(json);
       } catch (e) {
@@ -51,7 +51,10 @@ const Home = () => (
     {/* Cinematic Hero Section */}
     <section className="relative h-screen min-h-[700px] w-full bg-primary flex items-center justify-center overflow-hidden">
       {/* Background Image / Video Sim */}
-      <div className="absolute inset-0 bg-[url('/images/about/hero-bg.png')] bg-cover bg-center mix-blend-overlay opacity-50 transition-transform duration-[20s] ease-linear scale-110 hover:scale-100"></div>
+      <div 
+        className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-50 transition-transform duration-[20s] ease-linear scale-110 hover:scale-100"
+        style={{ backgroundImage: `url('${import.meta.env.BASE_URL}images/about/hero-bg.png')` }}
+      ></div>
       
       {/* Gordonstoun-inspired Organic Frame */}
       <div className="organic-frame"></div>
@@ -124,7 +127,7 @@ const Home = () => (
             </Link>
           </div>
           <div className="lg:w-7/12 relative group h-[600px] w-full">
-             <img src="/images/gallery/Aksharabhyasa Program.png" alt="Students on campus" className="w-full h-full object-cover rounded-tr-[100px] rounded-bl-[100px] shadow-2xl transition-transform duration-1000 group-hover:scale-[1.02]" />
+             <img src={`${import.meta.env.BASE_URL}images/gallery/Aksharabhyasa Program.png`} alt="Students on campus" className="w-full h-full object-cover rounded-tr-[100px] rounded-bl-[100px] shadow-2xl transition-transform duration-1000 group-hover:scale-[1.02]" />
              <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-secondary rounded-full -z-10 blur-2xl opacity-50"></div>
           </div>
         </div>
@@ -186,7 +189,7 @@ const Gallery = () => {
               const spanClass = i === 0 || i % 5 === 0 ? 'col-span-1 md:col-span-2 row-span-2' : 'col-span-1 row-span-1';
               return (
                 <div key={i} className={`group relative overflow-hidden bg-gray-100 ${spanClass} min-h-[300px]`}>
-                  <img src={item.src} alt={item.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                  <img src={`${import.meta.env.BASE_URL}${item.src.replace(/^\//, '')}`} alt={item.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/60 transition-colors duration-500 flex items-center justify-center">
                     <span className="text-white font-serif text-2xl md:text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-4 group-hover:translate-y-0 italic text-center px-4">{item.title}</span>
                   </div>

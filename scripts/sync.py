@@ -5,7 +5,7 @@ import re
 
 # Configuration
 SOURCE_DIR = os.getenv('SOURCE_DIR', 'mock_gdrive')
-OUTPUT_DIR = 'src/content'
+OUTPUT_DIR = 'public/content'
 IMAGE_OUTPUT_DIR = 'public/images'
 CONTENT_TYPES = ['01-About', '02-Academics', '03-Admissions', '04-Gallery', '05-Blog', '06-Disclosures']
 IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp', '.gif'}
