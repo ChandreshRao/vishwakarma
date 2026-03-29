@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #702381;
+  --color-secondary: #C7B0D5;
+  --color-accent: #FFD700;
+  
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #ffffff;
+  color: #7A7D83;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+}
+
+.text-glow {
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+/* Unique Gordonstoun-inspired organic curved border overlay */
+.organic-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  border: 40px solid white;
+  border-radius: 6vw 6vw 0 0;
+}
+
+@media (max-width: 768px) {
+  .organic-frame {
+    border-width: 20px;
+    border-radius: 8vw 8vw 0 0;
+  }
+}
