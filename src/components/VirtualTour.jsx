@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import siteConfig from '../siteConfig';
 
 const VirtualTour = ({ imagePath, title = "Campus Tour" }) => {
   const viewerRef = useRef(null);
@@ -13,7 +14,7 @@ const VirtualTour = ({ imagePath, title = "Campus Tour" }) => {
           panorama: imagePath || 'https://pannellum.org/images/alma.jpg',
           autoLoad: true,
           title: title,
-          author: "Jnanavahini School",
+          author: siteConfig.name,
           showFullscreenCtrl: true,
           showZoomCtrl: true,
         });
