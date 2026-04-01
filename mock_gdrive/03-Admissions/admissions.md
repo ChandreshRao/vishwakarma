@@ -1,4 +1,14 @@
-# Admission Procedure & Fees
+---
+title: Admissions & Fee Structure
+slug: admissions
+category: admissions
+date: 2024-03-31
+tags: admissions, registration, fees, tax-benefit
+excerpt: Guide to our registration process, interactive sessions, and board compliance.
+---
+
+# Admissions & Fee Structure
+
 
 ## Procedure
 1. **Visit School**: Prospective parents are invited to visit the campus during office hours (9:00 AM - 4:00 PM).

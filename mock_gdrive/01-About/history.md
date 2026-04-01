@@ -1,4 +1,14 @@
-# History of Seva Vahini Trust & Jnanavahini
+---
+title: Our Heritage & Journey
+slug: history
+category: about
+date: 2024-03-30
+tags: history, milestone, heritage
+excerpt: The story of Seva Vahini Trust and the evolution of Jnanavahini School from a single room to 680+ students.
+---
+
+# Our Heritage & Journey
+
 
 The Seva Vahini Trust was established as a foundational "Mother institution" for educational and social welfare initiatives, guided by the philosophy of "Vidya Hridya Sada Bhaveth" (May knowledge always be within the heart).
 
