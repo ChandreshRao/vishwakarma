@@ -1,4 +1,14 @@
-# Our Ecosystem
+---
+title: Our Educational Ecosystem
+slug: curriculum
+category: academics
+date: 2024-03-31
+tags: schools, highschool, college, special-needs
+excerpt: From primary to pre-university, explore our holistic 'Panchamukhi' curriculum.
+---
+
+# Our Educational Ecosystem
+
 
 ## Nachiketha Higher Primary School
 

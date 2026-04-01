@@ -1,4 +1,14 @@
-# Achievements
+---
+title: Academic & Extra-Curricular Achievements
+slug: achievements
+category: about
+date: 2024-03-31
+tags: academic, sports, cultural, excellence
+excerpt: 11 years of 100% SSLC pass rates and state-level champions in sports and culture.
+---
+
+# Academic & Extra-Curricular Achievements
+
 
 Rural education **can** compete at the highest state levels. Here is the proof.
 

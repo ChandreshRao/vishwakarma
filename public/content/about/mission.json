@@ -1,7 +1,16 @@
 {
   "title": "Vision & Mission",
   "slug": "mission",
-  "content": "## Our Vision\nTo transform from a space-constrained facility into a state-of-the-art, self-sustained campus. We aim to provide a holistic environment where \"Indianness in Education\" meets modern scientific advancement.\n\n## Our Mission\n- **Holistic Education**: Emphasizing the \"Pancha Mukhi\" (Five-fold) education system including Kannada, moral and cultural activities, physical and spiritual growth, and festivals.\n- **Academic Excellence**: Maintaining a 100% SSLC pass rate and ranking top in the Taluk.\n- **Accessibility**: Providing quality education to remote and hilly regions through dedicated transport and infrastructure.\n- **Special Care**: Empowering \"specially-abled\" children through our Navachethana school.",
+  "content": "# Vision & Mission\n\n\n## Our Vision\nTo transform from a space-constrained facility into a state-of-the-art, self-sustained campus. We aim to provide a holistic environment where \"Indianness in Education\" meets modern scientific advancement.\n\n## Our Mission\n- **Holistic Education**: Emphasizing the \"Pancha Mukhi\" (Five-fold) education system including Kannada, moral and cultural activities, physical and spiritual growth, and festivals.\n- **Academic Excellence**: Maintaining a 100% SSLC pass rate and ranking top in the Taluk.\n- **Accessibility**: Providing quality education to remote and hilly regions through dedicated transport and infrastructure.\n- **Special Care**: Empowering \"specially-abled\" children through our Navachethana school.",
+  "metadata": {
+    "title": "Vision & Mission",
+    "slug": "mission",
+    "category": "about",
+    "date": "2024-03-31",
+    "tags": "vision, mission, transformation",
+    "excerpt": "Our path from a space-constrained facility to a self-sustained heritage campus."
+  },
   "type": "about",
-  "lastUpdated": 1774803841.489601
+  "lastUpdated": 1775065363.556068,
+  "formattedDate": "Apr 01, 2026"
 }
