@@ -1,0 +1,6 @@
+PyYAML
+python-frontmatter
+google-auth
+google-api-python-client
+requests
+python-dotenv
