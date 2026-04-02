@@ -147,7 +147,7 @@ def sync_gdrive():
                 break
 
         if not category: continue
-        print(f"📂 Matched folder: '{folder['name']}' -> '{category}'")
+        print(f"📂 Processing folder: '{folder['name']}' (ID: {folder['id']}) -> '{category}'")
         target_dir = os.path.join(OUTPUT_DIR, category)
         target_img_dir = os.path.join(IMAGE_OUTPUT_DIR, category)
         os.makedirs(target_dir, exist_ok=True)
@@ -158,31 +158,26 @@ def sync_gdrive():
         gallery_images = []
 
         sync_cache = load_cache()
-        active_file_ids = set()
-
         for file in files:
             file_id = file['id']
-            active_file_ids.add(file_id)
             name = file['name']
+            mime = file['mimeType']
             ext = os.path.splitext(name)[1].lower()
             last_mod = file['modifiedTime']
             last_mod_ts = datetime.fromisoformat(last_mod.replace('Z', '+00:00')).timestamp()
 
+            is_gdoc = mime == 'application/vnd.google-apps.document'
+            
+            # Skip cache if debugging or check cache
             cache_entry = sync_cache.get(file_id)
             is_cached = cache_entry and cache_entry.get('modifiedTime') == last_mod
 
             if is_cached:
                 if ext in IMAGE_EXTENSIONS:
-                    target_path = os.path.join(target_img_dir, name)
-                    if not os.path.exists(target_path):
-                        is_cached = False
-                    elif category == "gallery":
-                        gallery_images.append({"title": name.split('.')[0].replace('-', ' ').title(), "src": f"images/{category}/{name}"})
-                elif ext in {'.md', '.txt'}:
+                    gallery_images.append({"title": name.split('.')[0].replace('-', ' ').title(), "src": f"images/{category}/{name}"})
+                elif ext in {'.md', '.txt'} or is_gdoc:
                     json_path = cache_entry.get('json_path')
-                    if not json_path or not os.path.exists(json_path):
-                        is_cached = False
-                    else:
+                    if json_path and os.path.exists(json_path):
                         with open(json_path, 'r', encoding='utf-8') as f:
                             data = json.load(f)
                             excerpt = data.get('metadata', {}).get('excerpt', data.get('content', '')[:200].replace('\n', ' ') + '...')
@@ -193,12 +188,11 @@ def sync_gdrive():
                                 "category": category,
                                 "tags": data.get('metadata', {}).get('tags', '').split(',') if data.get('metadata', {}).get('tags') else []
                             })
-                
-            if is_cached:
-                print(f"⏭️  Skipped {name} (Unchanged)")
+                print(f"⏭️  Skipped {name} (Cached)")
                 continue
 
-            # Download if not cached
+            print(f"📄 Syncing: {name} ({mime})")
+            
             if ext in IMAGE_EXTENSIONS:
                 request = service.files().get_media(fileId=file_id)
                 with open(os.path.join(target_img_dir, name), 'wb') as f:
@@ -209,8 +203,12 @@ def sync_gdrive():
                     gallery_images.append({"title": name.split('.')[0].replace('-', ' ').title(), "src": f"images/{category}/{name}"})
                 sync_cache[file_id] = {'modifiedTime': last_mod}
                     
-            elif ext in {'.md', '.txt'}:
-                request = service.files().get_media(fileId=file_id)
+            elif ext in {'.md', '.txt'} or is_gdoc:
+                if is_gdoc:
+                    request = service.files().export_media(fileId=file_id, mimeType='text/plain')
+                else:
+                    request = service.files().get_media(fileId=file_id)
+                
                 fh = io.BytesIO()
                 downloader = MediaIoBaseDownload(fh, request)
                 done = False
@@ -224,7 +222,7 @@ def sync_gdrive():
                     'modifiedTime': last_mod,
                     'json_path': os.path.join(target_dir, f"{slug}.json")
                 }
-            print(f"✅ Sync'd {name}")
+                print(f"✅ Sync'd {name}")
             save_cache(sync_cache)
 
         if category == "gallery":
