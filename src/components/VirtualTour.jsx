@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import siteConfig from '../siteConfig';
+import { useConfig } from '../context/ConfigContext';
 
 const VirtualTour = ({ imagePath, title = "Campus Tour" }) => {
+  const { config: siteConfig } = useConfig();
   const viewerRef = useRef(null);
 
   useEffect(() => {

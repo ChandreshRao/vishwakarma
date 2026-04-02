@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import localSiteConfig from '../siteConfig';
 
 const ConfigContext = createContext();
 
 export const ConfigProvider = ({ children }) => {
-  const [config, setConfig] = useState(localSiteConfig);
+  const [config, setConfig] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
