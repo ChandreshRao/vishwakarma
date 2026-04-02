@@ -1,0 +1,15 @@
+[build]
+  # Combined command to ensure Python requirements are present before sync
+  command = "pip install -r requirements.txt && npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Ensuring compatible environment versions
+  PYTHON_VERSION = "3.10"
+  NODE_VERSION = "20"
+
+[[redirects]]
+  # Essential for Single Page Applications (React Router) to work after refresh
+  from = "/*"
+  to = "/index.html"
+  status = 200

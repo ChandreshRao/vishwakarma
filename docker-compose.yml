@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        PIPELINE_MODE: ${PIPELINE_MODE:-gdrive}
+        GDRIVE_FOLDER_ID: ${GDRIVE_FOLDER_ID}
+        GDRIVE_SERVICE_ACCOUNT_KEY: ${GDRIVE_SERVICE_ACCOUNT_KEY}
+    ports:
+      - "8080:80"
+    environment:
+      - PIPELINE_MODE=${PIPELINE_MODE:-gdrive}
+      - GDRIVE_FOLDER_ID=${GDRIVE_FOLDER_ID}
+      - GDRIVE_SERVICE_ACCOUNT_KEY=${GDRIVE_SERVICE_ACCOUNT_KEY}
+    restart: unless-stopped
+
+  # Dev-Sync Helper: Useful for local development with Hot Module Replacement
+  dev:
+    image: node:20-slim
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - PIPELINE_MODE=${PIPELINE_MODE:-gdrive}
+      - GDRIVE_FOLDER_ID=${GDRIVE_FOLDER_ID}
+      - GDRIVE_SERVICE_ACCOUNT_KEY=${GDRIVE_SERVICE_ACCOUNT_KEY}
+    command: sh -c "apt-get update && apt-get install -y python3 python3-pip && pip3 install -r requirements.txt --break-system-packages && npm install && npm run dev"
+    ports:
+      - "5173:5173"
