@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "npm run sync && vite build",
+    "dev": "node scripts/check-sync.js && vite",
+    "build": "python scripts/sync.py && vite build",
+    "clean": "Remove-Item -Recurse -Force dist, public/content, public/images",
     "lint": "eslint .",
     "preview": "vite preview",
     "sync": "python scripts/sync.py"
