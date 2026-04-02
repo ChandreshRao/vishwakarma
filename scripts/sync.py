@@ -137,11 +137,17 @@ def sync_gdrive():
     folders = results.get('files', [])
 
     for folder in folders:
-        # Match against our CONTENT_TYPES
-        category = CONTENT_TYPES.get(folder['name'])
+        # Flexible folder matching (Case-insensitive, ignoring spacing/numbering)
+        folder_clean = re.sub(r'^\d+[\s-]*', '', folder['name']).lower().strip()
+        category = None
+        for key, val in CONTENT_TYPES.items():
+            key_clean = re.sub(r'^\d+[\s-]*', '', key).lower().strip()
+            if folder_clean == key_clean or folder_clean == val:
+                category = val
+                break
+
         if not category: continue
-        
-        print(f"📂 Processing folder: {folder['name']} -> {category}")
+        print(f"📂 Matched folder: '{folder['name']}' -> '{category}'")
         target_dir = os.path.join(OUTPUT_DIR, category)
         target_img_dir = os.path.join(IMAGE_OUTPUT_DIR, category)
         os.makedirs(target_dir, exist_ok=True)
@@ -231,6 +237,14 @@ def main():
         sync_gdrive()
     else:
         sync_local()
+    
+    # Critical Check: Verify if config was loaded
+    config_file = os.path.join(OUTPUT_DIR, 'config', 'site-config.json')
+    if not os.path.exists(config_file):
+        print(f"❌ CRITICAL ERROR: '{config_file}' was not generated.")
+        print("Please check your GDRIVE_FOLDER_ID and folder naming in Drive.")
+        import sys
+        sys.exit(1) # HARD FAIL - Stops the Netlify build
     
     with open(os.path.join(OUTPUT_DIR, 'search-index.json'), 'w', encoding='utf-8') as f:
         json.dump(search_index, f, indent=2)
