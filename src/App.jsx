@@ -108,6 +108,9 @@ const Home = () => {
         style={{ backgroundImage: `url('${import.meta.env.BASE_URL}images/about/hero-bg.png')` }}
       ></motion.div>
       
+      {/* Dark overlay for contrast */}
+      <div className="absolute inset-0 bg-black/40 z-10"></div>
+      
       <div className="organic-frame"></div>
 
       <motion.div 
@@ -129,7 +132,7 @@ const Home = () => {
         variants={staggerContainer}
         className="container mx-auto px-6 md:px-12 text-center relative z-20 flex flex-col items-center justify-center h-full pt-20"
       >
-        <motion.h1 variants={fadeIn} className="text-6xl md:text-8xl lg:text-9xl font-serif text-white mb-6 drop-shadow-2xl tracking-tighter leading-none">
+        <motion.h1 variants={fadeIn} className="text-6xl md:text-8xl lg:text-9xl font-serif text-white mb-6 drop-shadow-[0_10px_50px_rgba(0,0,0,0.5)] tracking-tighter leading-none">
           {siteConfig?.heroHeadline || 'Cultivating'}<br />
           <span className="italic font-light text-accent text-glow">{siteConfig?.heroSubheadline || 'Excellence'}</span>
         </motion.h1>
