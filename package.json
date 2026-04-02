@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/check-sync.js && vite",
-    "build": "node scripts/check-sync.js && vite build",
+    "build": "python scripts/sync.py && vite build",
     "clean": "Remove-Item -Recurse -Force dist, public/content, public/images",
     "lint": "eslint .",
     "preview": "vite preview",
