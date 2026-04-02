@@ -8,21 +8,27 @@ export const ConfigProvider = ({ children }) => {
 
   useEffect(() => {
     async function loadCloudConfig() {
+      const configPath = `${import.meta.env.BASE_URL}content/config/site-config.json`.replace('//', '/');
+      console.log("🔍 Attempting to load site config from:", configPath);
+      
       try {
-        const response = await fetch(`${import.meta.env.BASE_URL}content/config/site-config.json`);
+        const response = await fetch(configPath);
         if (response.ok) {
           const cloudConfig = await response.json();
-          // Merge cloud config metadata with local defaults
-          setConfig(prev => ({
-            ...prev,
-            ...cloudConfig.metadata
-          }));
-          console.log("☁️  Cloud site configuration loaded.");
+          console.log("✅ Cloud Config Fetched:", cloudConfig);
+          
+          if (cloudConfig.metadata && Object.keys(cloudConfig.metadata).length > 0) {
+            setConfig(cloudConfig.metadata);
+            console.log("✨ Site Identity Applied:", cloudConfig.metadata.name);
+          } else {
+            console.warn("⚠️ Site-config.json found but metadata was empty.");
+          }
         } else {
-          console.log("ℹ️  Using local site configuration (no cloud config found).");
+          console.error("❌ Failed to fetch site-config.json. Status:", response.status);
+          console.log("ℹ️ Check if the 'sync' step ran correctly during build.");
         }
       } catch (e) {
-        console.warn("⚠️  Fallling back to local site configuration:", e.message);
+        console.error("⚠️ Config Fetch Error:", e.message);
       } finally {
         setLoading(false);
       }
