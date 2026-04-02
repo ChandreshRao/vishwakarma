@@ -32,16 +32,13 @@ CONTENT_TYPES = {
     '06-Disclosures': 'disclosures'
 }
 IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp', '.gif'}
+CACHE_FILE = os.path.join(OUTPUT_DIR, '.sync-cache.json')
 
 search_index = []
 
-def clean_output():
-    if os.path.exists(OUTPUT_DIR):
-        shutil.rmtree(OUTPUT_DIR)
-    os.makedirs(OUTPUT_DIR)
-    if os.path.exists(IMAGE_OUTPUT_DIR):
-        shutil.rmtree(IMAGE_OUTPUT_DIR)
-    os.makedirs(IMAGE_OUTPUT_DIR)
+def ensure_directories():
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs(IMAGE_OUTPUT_DIR, exist_ok=True)
 
 def parse_frontmatter(content):
     frontmatter = {}
@@ -112,6 +109,20 @@ def sync_local():
             with open(os.path.join(target_dir, 'index.json'), 'w', encoding='utf-8') as f:
                 json.dump({"title": "Campus Gallery", "images": gallery_images}, f, indent=2)
 
+def load_cache():
+    if os.path.exists(CACHE_FILE):
+        try:
+            with open(CACHE_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except:
+            pass
+    return {}
+
+def save_cache(cache):
+    os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
+    with open(CACHE_FILE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, indent=2)
+
 def sync_gdrive():
     print(f"☁️ Starting CLOUD sync from GDrive folder {GDRIVE_FOLDER_ID}...")
     if not SERVICE_ACCOUNT_KEY or not GDRIVE_FOLDER_ID:
@@ -140,21 +151,60 @@ def sync_gdrive():
         files = files_results.get('files', [])
         gallery_images = []
 
+        sync_cache = load_cache()
+        active_file_ids = set()
+
         for file in files:
+            file_id = file['id']
+            active_file_ids.add(file_id)
             name = file['name']
             ext = os.path.splitext(name)[1].lower()
-            last_mod = datetime.fromisoformat(file['modifiedTime'].replace('Z', '+00:00')).timestamp()
+            last_mod = file['modifiedTime']
+            last_mod_ts = datetime.fromisoformat(last_mod.replace('Z', '+00:00')).timestamp()
 
+            cache_entry = sync_cache.get(file_id)
+            is_cached = cache_entry and cache_entry.get('modifiedTime') == last_mod
+
+            if is_cached:
+                if ext in IMAGE_EXTENSIONS:
+                    target_path = os.path.join(target_img_dir, name)
+                    if not os.path.exists(target_path):
+                        is_cached = False
+                    elif category == "gallery":
+                        gallery_images.append({"title": name.split('.')[0].replace('-', ' ').title(), "src": f"images/{category}/{name}"})
+                elif ext in {'.md', '.txt'}:
+                    json_path = cache_entry.get('json_path')
+                    if not json_path or not os.path.exists(json_path):
+                        is_cached = False
+                    else:
+                        with open(json_path, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            excerpt = data.get('metadata', {}).get('excerpt', data.get('content', '')[:200].replace('\n', ' ') + '...')
+                            search_index.append({
+                                "title": data.get('title'),
+                                "excerpt": excerpt,
+                                "slug": data.get('slug'),
+                                "category": category,
+                                "tags": data.get('metadata', {}).get('tags', '').split(',') if data.get('metadata', {}).get('tags') else []
+                            })
+                
+            if is_cached:
+                print(f"⏭️  Skipped {name} (Unchanged)")
+                continue
+
+            # Download if not cached
             if ext in IMAGE_EXTENSIONS:
-                request = service.files().get_media(fileId=file['id'])
+                request = service.files().get_media(fileId=file_id)
                 with open(os.path.join(target_img_dir, name), 'wb') as f:
                     downloader = MediaIoBaseDownload(f, request)
                     done = False
                     while not done: _, done = downloader.next_chunk()
                 if category == "gallery":
                     gallery_images.append({"title": name.split('.')[0].replace('-', ' ').title(), "src": f"images/{category}/{name}"})
+                sync_cache[file_id] = {'modifiedTime': last_mod}
+                    
             elif ext in {'.md', '.txt'}:
-                request = service.files().get_media(fileId=file['id'])
+                request = service.files().get_media(fileId=file_id)
                 fh = io.BytesIO()
                 downloader = MediaIoBaseDownload(fh, request)
                 done = False
@@ -162,15 +212,21 @@ def sync_gdrive():
                 raw = fh.getvalue().decode('utf-8')
                 meta, body = parse_frontmatter(raw)
                 fn = os.path.splitext(name)[0]
-                save_content(meta.get('slug', fn), meta.get('title', fn.title()), body, meta, category, last_mod, target_dir)
+                slug = meta.get('slug', fn)
+                save_content(slug, meta.get('title', fn.title()), body, meta, category, last_mod_ts, target_dir)
+                sync_cache[file_id] = {
+                    'modifiedTime': last_mod,
+                    'json_path': os.path.join(target_dir, f"{slug}.json")
+                }
             print(f"✅ Sync'd {name}")
+            save_cache(sync_cache)
 
         if category == "gallery":
             with open(os.path.join(target_dir, 'index.json'), 'w', encoding='utf-8') as f:
                 json.dump({"title": "Campus Gallery", "images": gallery_images}, f, indent=2)
 
 def main():
-    clean_output()
+    ensure_directories()
     if PIPELINE_MODE == 'gdrive':
         sync_gdrive()
     else:
