@@ -18,4 +18,4 @@ if (!fs.existsSync(CONTENT_PATH) || !fs.existsSync(SEARCH_INDEX)) {
 } else {
   console.log("✅ Using existing local content.");
   console.log("💡 Note: Run 'npm run sync' to fetch the latest updates from Google Drive.\n");
-}
+};
